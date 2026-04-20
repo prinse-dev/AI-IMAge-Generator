@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Image Generator</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-wrapper">
+
+        <!-- Header Section -->
+        <header class="header">
+            <h1>AI Image Generator</h1>
+            <p class="tagline">
+                Enter a prompt and generate an AI-based image instantly.
+            </p>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <form id="generate-image-form">
+                
+                <input 
+                    type="text" 
+                    id="input-value" 
+                    placeholder="Type something like 'sunset over mountains...'" 
+                    class="input-box"
+                >
+
+                <button type="submit" class="generate-btn">
+                    Generate
+                </button>
+
+            </form>
+        </section>
+
+        <!-- Output Section -->
+        <section id="images-visible" class="output-section">
+
+            <p id="imageContainerText" class="status-text"></p>
+
+            <img 
+                id="generated-image" 
+                class="result-image" 
+                src="" 
+                alt="Generated result will appear here"
+            >
+
+        </section>
+
+    </div>
+
+    <!-- JS File -->
+    <script src="app.js"></script>
+
+</body>
+</html>
