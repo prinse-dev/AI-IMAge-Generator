@@ -1,13 +1,14 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PixelMind AI | Image Generator</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="script.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <div class="glass-container">
         <header>
@@ -16,7 +17,8 @@
         </header>
 
         <div class="input-section">
-            <textarea id="promptInput" placeholder="Describe what you want to see (e.g., 'A futuristic cyberpunk city in the rain, cinematic lighting, 8k')..."></textarea>
+            <textarea id="promptInput"
+                placeholder="Describe what you want to see (e.g., 'A futuristic cyberpunk city in the rain, cinematic lighting, 8k')..."></textarea>
             <button id="generateBtn">
                 <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Art
             </button>
@@ -27,7 +29,7 @@
                 <i class="fa-regular fa-image"></i>
                 <p>Your creation will appear here</p>
             </div>
-            
+
             <div id="loader" class="hidden">
                 <div class="spinner"></div>
                 <p>Dreaming up your image...</p>
@@ -39,6 +41,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="index.js"></script>
 </body>
+
 </html>
