@@ -1,64 +1,44 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AI Image Generator</title>
-
-    <!-- External CSS -->
+    <title>PixelMind AI | Image Generator</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-
 <body>
-
-    <div class="app-wrapper">
-
-        <!-- Header Section -->
-        <header class="header">
-            <h1>AI Image Generator</h1>
-            <p class="tagline">
-                Enter a prompt and generate an AI-based image instantly.
-            </p>
+    <div class="glass-container">
+        <header>
+            <h1>Pixel<span>Mind</span> AI</h1>
+            <p>Transform your imagination into art</p>
         </header>
 
-        <!-- Input Section -->
-        <section class="input-section">
-            <form id="generate-image-form">
-                
-                <input 
-                    type="text" 
-                    id="input-value" 
-                    placeholder="Type something like 'sunset over mountains...'" 
-                    class="input-box"
-                >
+        <div class="input-section">
+            <textarea id="promptInput" placeholder="Describe what you want to see (e.g., 'A futuristic cyberpunk city in the rain, cinematic lighting, 8k')..."></textarea>
+            <button id="generateBtn">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Art
+            </button>
+        </div>
 
-                <button type="submit" class="generate-btn">
-                    Generate
-                </button>
+        <div class="result-section">
+            <div id="imageContainer" class="image-placeholder">
+                <i class="fa-regular fa-image"></i>
+                <p>Your creation will appear here</p>
+            </div>
+            
+            <div id="loader" class="hidden">
+                <div class="spinner"></div>
+                <p>Dreaming up your image...</p>
+            </div>
+        </div>
 
-            </form>
-        </section>
-
-        <!-- Output Section -->
-        <section id="images-visible" class="output-section">
-
-            <p id="imageContainerText" class="status-text"></p>
-
-            <img 
-                id="generated-image" 
-                class="result-image" 
-                src="" 
-                alt="Generated result will appear here"
-            >
-
-        </section>
-
+        <div class="actions hidden" id="actionButtons">
+            <button id="downloadBtn" class="secondary-btn"><i class="fa-solid fa-download"></i> Download</button>
+        </div>
     </div>
 
-    <!-- JS File -->
-    <script src="app.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>

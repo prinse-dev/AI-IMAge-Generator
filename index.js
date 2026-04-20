@@ -1,47 +1,58 @@
-// app.js
+const API_TOKEN = "YOUR_HUGGING_FACE_TOKEN_HERE"; // Replace with your token
+const MODEL_URL = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5";
 
-// Select DOM elements
-const form = document.querySelector('#generate-image-form');
-const inputField = document.querySelector('#input-value');
-const messageText = document.querySelector('#imageContainerText');
-const imageBox = document.querySelector('#images-visible');
-const outputImage = document.querySelector('#generated-image');
+const promptInput = document.getElementById('promptInput');
+const generateBtn = document.getElementById('generateBtn');
+const imageContainer = document.getElementById('imageContainer');
+const loader = document.getElementById('loader');
+const actionButtons = document.getElementById('actionButtons');
+const downloadBtn = document.getElementById('downloadBtn');
 
-// Function to get image from API
-async function getImage(query) {
+async function generateImage() {
+    const prompt = promptInput.value.trim();
+    if (!prompt) return alert("Please enter a prompt!");
+
+    // UI Updates
+    generateBtn.disabled = true;
+    loader.classList.remove('hidden');
+    imageContainer.classList.add('hidden');
+    actionButtons.classList.add('hidden');
+
     try {
-        // Replace this with your actual API endpoint
-        const apiUrl = `use your API here`;
+        const response = await fetch(MODEL_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${API_TOKEN}`,
+            },
+            body: JSON.stringify({ inputs: prompt }),
+        });
 
-        const res = await fetch(apiUrl);
+        if (!response.ok) throw new Error("Failed to generate image");
 
-        if (!res.ok) {
-            throw new Error('Failed to fetch image');
-        }
+        const blob = await response.blob();
+        const imgUrl = URL.createObjectURL(blob);
+        
+        imageContainer.innerHTML = `<img src="${imgUrl}" alt="Generated AI Art">`;
+        
+        // Setup download
+        downloadBtn.onclick = () => {
+            const link = document.createElement('a');
+            link.href = imgUrl;
+            link.download = `ai-art-${Date.now()}.png`;
+            link.click();
+        };
 
-        // Show result section
-        messageText.textContent = "Here is your generated image:";
-        imageBox.style.display = "block";
-
-        // Set image source
-        outputImage.src = res.url;
-
-    } catch (err) {
-        console.error("Error:", err);
-        messageText.textContent = "Something went wrong. Try again!";
+    } catch (error) {
+        console.error(error);
+        alert("Error: Image generation failed. Check your API key.");
+        imageContainer.innerHTML = `<p>Something went wrong. Try again.</p>`;
+    } finally {
+        generateBtn.disabled = false;
+        loader.classList.add('hidden');
+        imageContainer.classList.remove('hidden');
+        actionButtons.classList.remove('hidden');
     }
 }
 
-// Handle form submit
-form.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    const userInput = inputField.value.trim();
-
-    if (userInput.length === 0) {
-        messageText.textContent = "Please enter something!";
-        return;
-    }
-
-    getImage(userInput);
-});
+generateBtn.addEventListener('click', generateImage);
