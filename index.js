@@ -16,8 +16,7 @@ async function generateImage() {
     actionButtons.classList.add('hidden');
 
     try {
-        const randomSeed = Math.floor(Math.random() * 100000);
-        const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?seed=${randomSeed}&width=1024&height=1024&nologo=true`;
+        const imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&nologo=true`;
 
         try {
             // First try fetching so we can get a Blob for native downloading
@@ -67,34 +66,12 @@ async function generateImage() {
             };
             
             img.onerror = () => {
-                console.log("Pollinations AI failed, falling back to emergency placeholder image.");
-                const fallbackImgUrl = `https://picsum.photos/1024/1024?random=${randomSeed}`;
-                const fallbackImg = new Image();
-                fallbackImg.src = fallbackImgUrl;
-                fallbackImg.alt = "Emergency Placeholder Photo";
-                
-                fallbackImg.onload = () => {
-                    imageContainer.innerHTML = '';
-                    imageContainer.appendChild(fallbackImg);
-                    
-                    downloadBtn.onclick = () => {
-                        const link = document.createElement('a');
-                        link.href = fallbackImgUrl;
-                        link.target = '_blank';
-                        link.download = `emergency-photo-${Date.now()}.jpg`;
-                        link.click();
-                    };
-                    
-                    generateBtn.disabled = false;
-                    loader.classList.add('hidden');
-                    imageContainer.classList.remove('hidden');
-                    actionButtons.classList.remove('hidden');
-                    alert("Notice: The AI generator server is temporarily blocked or down. A high-quality random placeholder photo was loaded instead to demonstrate the UI works.");
-                };
-                
-                fallbackImg.onerror = () => {
-                    throw new Error("All image generation methods failed.");
-                };
+                console.error("Pollinations AI image failed to load.");
+                generateBtn.disabled = false;
+                loader.classList.add('hidden');
+                imageContainer.innerHTML = `<p>Image generation failed. Please try a different prompt or try again later.</p>`;
+                imageContainer.classList.remove('hidden');
+                actionButtons.classList.add('hidden');
             };
         }
 
